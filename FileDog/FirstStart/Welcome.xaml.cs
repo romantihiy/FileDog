@@ -64,7 +64,7 @@ namespace FileDog.FirstStart
                 state.settings.pass = Engine.GetHash(
                     this.PassBox.Password);
             }
-            Engine.NextPage();
+            Engine.firstStartStack.NextPage(this);
         }
     }
 }

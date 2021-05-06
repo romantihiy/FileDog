@@ -36,15 +36,46 @@ namespace FileDog.FirstStart
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 string path = dialog.FileName;
-                var test = new EditPath(path);
-                test.ShowDialog();
-                MessageBox.Show(test.directory.includeSubfolders.ToString());
+                Engine.firstStartStack.NextPage(this, 
+                    new EditPath(path));
             }
+        }
+
+        public void UpdatePanel(EditPath dialog, Label sender = null)
+        {
+            if (dialog.result == EditPath.Result.Save && 
+                sender == null)
+            {
+                PastePath(dialog.path);
+            }
+            else if (dialog.result == EditPath.Result.Delete &&
+                sender != null)
+            {
+                Panel.Children.Remove(sender);
+            }
+        }
+
+        public void PastePath(string path)
+        {
+            Viewbox viewbox = new Viewbox()
+            {
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Margin = new Thickness(15),
+                MinHeight = 30,
+                MaxHeight = 40
+            };
+            Label label = new Label()
+            {
+                Foreground = Brushes.White,
+                Content = path
+            };
+            viewbox.Child = label;
+            Panel.Children.Add(viewbox);
         }
 
         private void Back(object sender, MouseButtonEventArgs e)
         {
-            Engine.PreviousPage();
+            Engine.firstStartStack.PreviousPage();
         }
     }
 }

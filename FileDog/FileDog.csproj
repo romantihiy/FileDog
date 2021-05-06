@@ -65,7 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="EditPath.xaml">
+    <Page Include="FirstStart\EditPath.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -89,10 +89,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="EditPath.xaml.cs">
+    <Compile Include="Engine.cs" />
+    <Compile Include="FirstStart\EditPath.xaml.cs">
       <DependentUpon>EditPath.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Engine.cs" />
     <Compile Include="FirstStart\Paths.xaml.cs">
       <DependentUpon>Paths.xaml</DependentUpon>
     </Compile>

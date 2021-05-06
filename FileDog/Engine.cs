@@ -108,29 +108,31 @@ namespace FileDog
         {
             public FirstStart.Welcome welcome;
             public FirstStart.Paths paths;
+            public Stack<object> senders;
 
             public FirstStartStack(Database state)
             {
                 welcome = new FirstStart.Welcome(state);
                 paths = new FirstStart.Paths(state);
+                senders = new Stack<object>();
             }
-        }
-        public static void NextPage()
-        {
-            if (firstStart)
+            public void NextPage(object sender, 
+                object nextpage = null)
             {
-                if (mainWindow.Frame.Content is FirstStart.Welcome)
+                if (nextpage != null)
+                {
+                    mainWindow.Frame.Content = nextpage;
+                }
+                else if (
+                    mainWindow.Frame.Content is FirstStart.Welcome)
                     mainWindow.Frame.Content = firstStartStack.paths;
+                senders.Push(sender); 
             }
-        }
-        public static void PreviousPage()
-        {
-            if (firstStart)
+            public void PreviousPage()
             {
-                if (mainWindow.Frame.Content is FirstStart.Paths)
-                    mainWindow.Frame.Content = 
-                        firstStartStack.welcome;
+                mainWindow.Frame.Content = senders.Pop();
             }
+            public object GetParent() { return senders.Peek(); }
         }
         public static string GetHash(string value)
         {
