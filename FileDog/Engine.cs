@@ -15,26 +15,30 @@ namespace FileDog
         public static MainWindow mainWindow;
         public static Database state;
         public static Login login;
+        public static MainPage mainPage;
         public static FirstStartStack firstStartStack;
-        public static bool firstStart = false;
 
-        public static void Init(MainWindow _mainWindow)
+        public static void Init(MainWindow _mainWindow = null)
         {
-            mainWindow = _mainWindow;
+            if (_mainWindow != null)
+                mainWindow = _mainWindow;
+            mainPage = new MainPage();
             login = new Login();
             if (System.IO.File.Exists("data.xml"))
             {
                 state = LoadDatabase();
-                mainWindow.Frame.Content = login;
+                Test();
+                ShowChanges(state.changes);
+                if (state.settings.pass != "None")
+                    SetPage(login);
+                else
+                    SetPage(mainPage);
             }
             else
             {
-                firstStart = true;
                 state = new Database();
                 firstStartStack = new FirstStartStack(state);
-                mainWindow.Frame.Content = firstStartStack.welcome;
             }
-            //new AddPath().Show();
         }
 
         public static void SaveDatabase(Database database, 
@@ -64,27 +68,18 @@ namespace FileDog
 
         public class Database
         {
-            public List<Directory> paths = new List<Directory>();
-            public List<File> files = new List<File>();
+            public List<string> paths = new List<string>();
+            public List<File> changes = new List<File>();
             public Settings settings = new Settings();
+            public string hash;
         }
 
         public class File
         {
             public string oldName;
-            public string newName;
+            public string newName = null;
             public DateTime date;
             public ChangeType changeType;
-        }
-
-        public class Directory
-        {
-            public Directory(string dirname = "")
-            {
-                path = dirname;
-            } 
-            public string path;
-            public bool includeSubfolders = false;
         }
 
         public enum ChangeType
@@ -101,7 +96,13 @@ namespace FileDog
             public bool Created = true;
             public bool Deleted = true;
             public bool Renamed = true;
+            public bool IncludeSubfolders = true;
             public string pass = "";
+        }
+
+        public static void SetPage(object page)
+        {
+            mainWindow.Frame.Content = page;
         }
 
         public class FirstStartStack
@@ -115,22 +116,32 @@ namespace FileDog
                 welcome = new FirstStart.Welcome(state);
                 paths = new FirstStart.Paths(state);
                 senders = new Stack<object>();
+                SetPage(welcome);
             }
             public void NextPage(object sender, 
                 object nextpage = null)
             {
                 if (nextpage != null)
                 {
-                    mainWindow.Frame.Content = nextpage;
+                    SetPage(nextpage);
                 }
                 else if (
                     mainWindow.Frame.Content is FirstStart.Welcome)
                     mainWindow.Frame.Content = firstStartStack.paths;
+                else
+                {
+                    welcome = null;
+                    paths = null;
+                    senders = null;
+                    SaveDatabase(state);
+                    Init();
+                    return;
+                }
                 senders.Push(sender); 
             }
             public void PreviousPage()
             {
-                mainWindow.Frame.Content = senders.Pop();
+                SetPage(senders.Pop());
             }
             public object GetParent() { return senders.Peek(); }
         }
@@ -148,7 +159,28 @@ namespace FileDog
             string hash = GetHash(pass);
             if (hash == state.settings.pass)
             {
-                MessageBox.Show("Пароль верный");
+                SetPage(mainPage);
+            }
+        }
+        public static void ShowChanges(List<File> changes)
+        {
+            foreach (var file in changes)
+            {
+                mainPage.PastePath(file);
+            }
+        }
+        private static void Test()
+        {
+            for (int i = 0; i < 5; ++i)
+            {
+                var file = new File
+                {
+                    oldName = "Desktop\\Корзина",
+                    newName = "Desktop\\Не корзина",
+                    date = new DateTime(2021, 5, 8, 21, 0, 0),
+                    changeType = ChangeType.Renamed
+                };
+                state.changes.Add(file);
             }
         }
     }

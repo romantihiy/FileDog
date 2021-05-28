@@ -14,32 +14,22 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
-namespace FileDog.FirstStart
+namespace FileDog.Options
 {
     /// <summary>
     /// Логика взаимодействия для Paths.xaml
     /// </summary>
     public partial class Paths : Page
     {
-        public Engine.Database state;
+        public Engine.Database database;
         public List<string> paths;
-        public Paths(Engine.Database database)
+        public Paths(Engine.Database _database)
         {
-            state = database;
-            paths = new List<string>();
             InitializeComponent();
-        }
-
-        private void AddPath(object sender, MouseButtonEventArgs e)
-        {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.InitialDirectory = "C:\\Users";
-            dialog.IsFolderPicker = true;
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                if (!paths.Contains(dialog.FileName))
-                    PastePath(dialog.FileName);
-            }
+            database = _database;
+            paths = new List<string>();
+            foreach (string path in database.paths)
+                PastePath(path);
         }
         public void PastePath(string path)
         {
@@ -64,20 +54,25 @@ namespace FileDog.FirstStart
 
         private void DeletePath(object sender, MouseButtonEventArgs e)
         {
-            paths.Remove(((sender as Viewbox).Child as Label).
-                Content.ToString());
-            Panel.Children.Remove(sender as Viewbox);
+            var dialogResult = MessageBox.Show("Удалить?", "Предупреждение", 
+                MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                paths.Remove(((sender as Viewbox).Child as Label).
+                    Content.ToString());
+                Panel.Children.Remove(sender as Viewbox);
+            }
         }
-
-        private void Back(object sender, MouseButtonEventArgs e)
+        private void AddPath(object sender, MouseButtonEventArgs e)
         {
-            Engine.firstStartStack.PreviousPage();
-        }
-
-        private void Next(object sender, MouseButtonEventArgs e)
-        {
-            state.paths.AddRange(paths);
-            Engine.firstStartStack.NextPage(this);
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.InitialDirectory = "C:\\Users";
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                if (!paths.Contains(dialog.FileName))
+                    PastePath(dialog.FileName);
+            }
         }
     }
 }

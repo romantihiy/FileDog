@@ -1,0 +1,39 @@
+﻿<Page x:Class="FileDog.Options.Settings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FileDog.Options"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Settings">
+
+    <Grid Background="SkyBlue">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="396*"/>
+            <ColumnDefinition Width="99"/>
+            <ColumnDefinition Width="99"/>
+            <ColumnDefinition Width="167*"/>
+            <ColumnDefinition Width="39*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="49*"/>
+            <RowDefinition Height="55*"/>
+            <RowDefinition Height="55*"/>
+            <RowDefinition Height="55*"/>
+            <RowDefinition Height="55*"/>
+        </Grid.RowDefinitions>
+   
+        <Label Content="Какие изменения нужно фиксировать?" Grid.Row="0" Grid.ColumnSpan="3" Foreground="White" FontSize="19" Margin="10"/>
+        <CheckBox Content="Изменение содержимого" Grid.Row="1" Margin="10" Foreground="White" FontSize="15" x:Name="Changed"/>
+        <CheckBox Content="Создание файлов" Grid.Row="2" Grid.Column="0" Margin="10" Foreground="White" FontSize="15" x:Name="Created"/>
+        <CheckBox Content="Удаление файлов" Grid.Row="3" Grid.Column="0" Margin="10" Foreground="White" FontSize="15" x:Name="Deleted"/>
+        <CheckBox Content="Переименование" Grid.Row="4" Grid.Column="0" Margin="10" Foreground="White" FontSize="15" x:Name="Renamed"/>
+
+        <Label Content="Изменение пароля" Grid.Row="0" Grid.Column="2" Foreground="White" FontSize="19" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Grid.ColumnSpan="2"/>
+        <TextBox Grid.Row="1" Grid.Column="2" Margin="20" Grid.ColumnSpan="2" FontSize="18" MaxLength="10" x:Name="TextBox"/>
+        <Label Content="Для сброса введите None" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Margin="20, 0, 20, 20" Cursor="Help"/>
+
+        <CheckBox Content="Включить подкаталоги" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3" Margin="20" Foreground="White" FontSize="15" x:Name="Subfolders" IsChecked="True"/>
+    </Grid>
+</Page>

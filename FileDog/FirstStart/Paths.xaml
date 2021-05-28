@@ -10,16 +10,17 @@
 
     <Grid Background="SkyBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition Height="315"/>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="48*"/>
+            <RowDefinition Height="315*"/>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="39"/>
-            <ColumnDefinition Width="167"/>
-            <ColumnDefinition Width="388"/>
-            <ColumnDefinition Width="167"/>
-            <ColumnDefinition Width="39"/>
+            <ColumnDefinition Width="39*"/>
+            <ColumnDefinition Width="167*"/>
+            <ColumnDefinition Width="388*"/>
+            <ColumnDefinition Width="167*"/>
+            <ColumnDefinition Width="39*"/>
         </Grid.ColumnDefinitions>
 
         <Label Content="За чем будем следить?" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Grid.Row="0" FontSize="25" Grid.ColumnSpan="5"/>
@@ -29,8 +30,9 @@
             </StackPanel>
         </ScrollViewer>
 
-        <Label Content="Далее" Grid.Row="2" Grid.Column="3" Margin="2" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand"/>
+        <Label Content="Далее" Grid.Row="2" Grid.Column="3" Margin="2" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseDown="Next"/>
         <Label Content="Назад" Grid.Row="2" Grid.Column="1" Margin="2" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseDown="Back"/>
         <Label Content="Добавить" Grid.Row="2" Grid.Column="2" Margin="2" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseDown="AddPath"/>
+ 
     </Grid>
 </Page>

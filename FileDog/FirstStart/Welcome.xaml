@@ -37,5 +37,8 @@
         <PasswordBox Grid.Row="2" Grid.Column="2" Margin="15" Grid.ColumnSpan="2" FontSize="20" MaxLength="10" x:Name="PassBox"/>
         <TextBox Grid.Row="2" Grid.Column="2" Margin="15" Grid.ColumnSpan="2" FontSize="18" MaxLength="10" Visibility="Hidden" x:Name="TextBox"/>
         <Label Content="Показать пароль" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="White" Margin="10" MouseDown="ShowPass" x:Name="ShowButton" Cursor="Hand"/>
+
+        <CheckBox Content="Включить подкаталоги" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Margin="15" Foreground="White" FontSize="15" x:Name="Subfolders" IsChecked="True"/>
+
     </Grid>
 </Page>

@@ -52,8 +52,9 @@ namespace FileDog.FirstStart
         {
             state.settings.Changed = this.Changed.IsChecked.Value;
             state.settings.Created = this.Created.IsChecked.Value;
-            state.settings.Deleted = this.Created.IsChecked.Value;
+            state.settings.Deleted = this.Deleted.IsChecked.Value;
             state.settings.Renamed = this.Renamed.IsChecked.Value;
+            state.settings.IncludeSubfolders = this.Subfolders.IsChecked.Value;
             if (passVis)
             {
                 state.settings.pass = Engine.GetHash(
