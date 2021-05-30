@@ -1,0 +1,29 @@
+﻿<Window x:Class="FileDogInstaller.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FileDogInstaller"
+        mc:Ignorable="d"
+        Title="FileDog Installer" Height="500" Width="500" ResizeMode="CanMinimize">
+    <Grid Background="SkyBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="70*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Выберите действие" Grid.Row="0" Margin="5" Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        
+        <Label Content="Установить" Grid.Row="2" Margin="5" Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Cursor="Hand" FontStyle="Oblique" MouseDown="Install"/>
+        <Label Content="Удалить" Grid.Row="3" Margin="5" Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Cursor="Hand" FontStyle="Oblique" MouseDown="Delete"/>
+        <Label Content="Сбросить пароль" Grid.Row="4" Margin="5" Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Cursor="Hand" FontStyle="Oblique" MouseDown="Reset"/>
+
+        <Label Content="©romantihiy" Grid.Row="6" Margin="5" Foreground="White" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+    </Grid>
+</Window>

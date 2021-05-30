@@ -78,6 +78,12 @@ namespace FileDog
             Panel.Children.Add(grid);
         }
 
+        public void ClearPanel()
+        {
+            foreach (var change in Panel.Children)
+                Panel.Children.Remove(change as Grid);
+        }
+
         private void FileInfo(object sender, MouseButtonEventArgs e)
         {
             Engine.SetPage(new ViewFile((sender as Label).Tag

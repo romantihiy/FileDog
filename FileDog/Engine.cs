@@ -7,6 +7,8 @@ using System.Windows;
 using System.IO;
 using System.Xml.Serialization;
 using System.Security.Cryptography;
+using System.Diagnostics;
+using System.Threading;
 
 namespace FileDog
 {
@@ -26,8 +28,13 @@ namespace FileDog
             login = new Login();
             if (System.IO.File.Exists("data.xml"))
             {
+                if (!CheckIndexer())
+                {
+                    MessageBox.Show("Процесс логирования не был запущен!", "Внимание");
+                    Restart();
+                }
                 state = LoadDatabase();
-                Test();
+                //Test();
                 ShowChanges(state.changes);
                 if (state.settings.pass != "None")
                     SetPage(login);
@@ -42,15 +49,16 @@ namespace FileDog
         }
 
         public static void SaveDatabase(Database database, 
-            string path = "data.xml")
+            string path = "data.xml", bool restart = true)
         {
             XmlSerializer formatter = new 
                 XmlSerializer(typeof(Database));
             using (FileStream fs = new FileStream(path, 
-                FileMode.OpenOrCreate))
+                FileMode.Create))
             {
                 formatter.Serialize(fs, database);
             }
+            if (restart) Restart();
         }
 
         public static Database LoadDatabase(string path = "data.xml")
@@ -164,6 +172,7 @@ namespace FileDog
         }
         public static void ShowChanges(List<File> changes)
         {
+            mainPage.ClearPanel();
             foreach (var file in changes)
             {
                 mainPage.PastePath(file);
@@ -182,6 +191,24 @@ namespace FileDog
                 };
                 state.changes.Add(file);
             }
+        }
+        public static void Restart()
+        {
+            var processes = Process.GetProcessesByName("FileIndexer");
+            foreach (var proc in processes)
+                proc.Kill();
+            //Thread.Sleep(1000);
+            Process fileIndexer = new Process();
+            fileIndexer.StartInfo.FileName = "FileIndexer.exe";
+            fileIndexer.StartInfo.CreateNoWindow = true;
+            fileIndexer.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            fileIndexer.Start();
+        }
+        public static bool CheckIndexer()
+        {
+            if (Process.GetProcessesByName("FileIndexer").Length != 0)
+                return true;
+            return false;
         }
     }
 }
